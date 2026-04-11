@@ -2,7 +2,8 @@
  * Swaps between two GLTF groups (16" vs 14") based on Zustand `scale`.
  * `PresentationControls` adds orbit-style interaction; GSAP tweens opacity + X offset for a cross-fade slide.
  */
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
+import { useFrame } from "@react-three/fiber";
 import { PresentationControls } from "@react-three/drei";
 import gsap from "gsap";
 import type { Group } from "three";
@@ -14,6 +15,23 @@ import { useGSAP } from "@gsap/react";
 
 const ANIMATION_DURATION = 1;
 const OFFSET_DISTANCE = 5;
+const AUTO_Y_RAD_PER_SEC = 0.11;
+
+const AutoSpinGroup = ({ children }: { children: ReactNode }) => {
+  const spinRef = useRef<Group>(null);
+  useFrame((_, delta) => {
+    const g = spinRef.current;
+    if (!g) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+    g.rotation.y += delta * AUTO_Y_RAD_PER_SEC;
+  });
+  return <group ref={spinRef}>{children}</group>;
+};
 
 /** Sets every mesh material in a group to transparent, then fades opacity (handles multi-material meshes). */
 const fadeMeshes = (group: Group | null, opacity: number) => {
@@ -80,15 +98,19 @@ const ModelSwitcher = ({ scale, isMobile }: ModelSwitcherProps) => {
   return (
     <>
       <PresentationControls {...controlsConfig}>
-        <group ref={largeMacbookRef}>
-          <MacbookModel16 scale={isMobile ? 0.05 : 0.08} />
-        </group>
+        <AutoSpinGroup>
+          <group ref={largeMacbookRef}>
+            <MacbookModel16 scale={isMobile ? 0.05 : 0.08} />
+          </group>
+        </AutoSpinGroup>
       </PresentationControls>
 
       <PresentationControls {...controlsConfig}>
-        <group ref={smallMacbookRef}>
-          <MacbookModel14 scale={isMobile ? 0.03 : 0.06} />
-        </group>
+        <AutoSpinGroup>
+          <group ref={smallMacbookRef}>
+            <MacbookModel14 scale={isMobile ? 0.03 : 0.06} />
+          </group>
+        </AutoSpinGroup>
       </PresentationControls>
     </>
   );

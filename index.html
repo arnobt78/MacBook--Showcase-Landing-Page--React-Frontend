@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html {
+        background-color: #000000;
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        background-color: #000000;
+      }
+      #root {
+        min-height: 100vh;
+        min-height: 100dvh;
+        min-height: 100svh;
+        background-color: #000000;
+      }
+    </style>
     <title>
       MacBook Pro Landing Page — React, Vite, TypeScript, Tailwind CSS, GSAP &
       Three.js Demo
@@ -21,6 +37,12 @@
     <meta name="publisher" content="Arnob Mahmud" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#000000" />
+    <style media="(prefers-reduced-motion: no-preference)">
+      #root:not([data-hero-cta-ready]) #hero > button {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+    </style>
     <link rel="canonical" href="https://macbook-ui.vercel.app/" />
     <link rel="author" href="https://www.arnobmahmud.com" />
     <link rel="me" href="https://www.arnobmahmud.com" />
@@ -70,15 +92,66 @@
         }
       }
     </script>
-    <link rel="preload" href="/fonts/regular.otf" as="font" type="font/otf" crossorigin />
-    <link rel="preload" href="/fonts/medium.otf" as="font" type="font/otf" crossorigin />
-    <link rel="preload" href="/fonts/semibold.otf" as="font" type="font/otf" crossorigin />
-    <link rel="preload" href="/fonts/bold.otf" as="font" type="font/otf" crossorigin />
-    <link rel="preload" href="/models/macbook-14-transformed.glb" as="fetch" crossorigin />
-    <link rel="preload" href="/models/macbook-16-transformed.glb" as="fetch" crossorigin />
-    <link rel="preload" href="/models/macbook-transformed.glb" as="fetch" crossorigin />
-    <link rel="preload" href="/videos/hero.mp4" as="fetch" type="video/mp4" crossorigin />
-    <link rel="preload" href="/videos/game.mp4" as="fetch" type="video/mp4" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/regular.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/medium.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/semibold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/bold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/models/macbook-14-transformed.glb"
+      as="fetch"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/models/macbook-16-transformed.glb"
+      as="fetch"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/models/macbook-transformed.glb"
+      as="fetch"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/videos/hero.mp4"
+      as="fetch"
+      type="video/mp4"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/videos/game.mp4"
+      as="fetch"
+      type="video/mp4"
+      crossorigin
+    />
     <link rel="prefetch" href="/videos/feature-1.mp4" crossorigin />
     <link rel="prefetch" href="/videos/feature-2.mp4" crossorigin />
     <link rel="prefetch" href="/videos/feature-3.mp4" crossorigin />

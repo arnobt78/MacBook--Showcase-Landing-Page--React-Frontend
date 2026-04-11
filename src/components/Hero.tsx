@@ -20,18 +20,36 @@ const Hero = () => {
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const root = document.getElementById("root");
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        root?.setAttribute("data-hero-cta-ready", "");
+        return;
+      }
       const h1 = headingRef.current;
       const titleImg = titleImgRef.current;
       const vid = videoRef.current;
       const buy = buyRef.current;
       const price = priceRef.current;
-      if (!h1 || !titleImg || !vid || !buy || !price) return;
+      if (!h1 || !titleImg || !vid || !buy || !price) {
+        root?.setAttribute("data-hero-cta-ready", "");
+        return;
+      }
+      gsap.set(buy, { autoAlpha: 0, y: 8, scale: 0.985 });
+      root?.setAttribute("data-hero-cta-ready", "");
       const ease = "power2.inOut";
       const enter = {
         autoAlpha: 0,
         y: 8,
         scale: 0.985,
+        duration: 0.52,
+        ease,
+        immediateRender: true,
+      };
+      const buyHidden = { autoAlpha: 0, y: 8, scale: 0.985 };
+      const buyShown = {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
         duration: 0.52,
         ease,
       };
@@ -45,7 +63,7 @@ const Hero = () => {
       tl.from(h1, enter)
         .from(titleImg, enter, ">0.07")
         .from(vid, enter, ">0.08")
-        .from(buy, enter, ">0.08")
+        .fromTo(buy, buyHidden, buyShown, ">0.08")
         .from(price, enter, ">0.07");
     },
     { scope: sectionRef },
@@ -71,8 +89,8 @@ const Hero = () => {
           autoPlay
           muted
           playsInline
-          width={1920}
-          height={1080}
+          width="100%"
+          height="100%"
         />
       </div>
 

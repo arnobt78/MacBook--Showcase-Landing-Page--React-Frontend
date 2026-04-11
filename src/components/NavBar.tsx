@@ -28,6 +28,7 @@ const NavBar = () => {
         duration: 0.52,
         stagger: 0.07,
         ease: "power2.inOut",
+        immediateRender: true,
       });
     },
     { scope: headerRef },

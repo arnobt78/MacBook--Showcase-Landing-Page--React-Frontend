@@ -88,7 +88,7 @@ const ModelSwitcher = ({ scale, isMobile }: ModelSwitcherProps) => {
   }, [scale]);
 
   const controlsConfig = {
-    snap: true,
+    snap: false,
     speed: 1,
     zoom: 1,
     azimuth: [-Infinity, Infinity] as [number, number],

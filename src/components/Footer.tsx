@@ -20,6 +20,12 @@ const Footer = () => {
       row.style.setProperty("--row-delay", `${index * 70}ms`);
     });
     shell.classList.add("footer-reveal-ready");
+    const syncInView = () => {
+      const rect = shell.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const visible = rect.top < vh * 0.92 && rect.bottom > vh * 0.08;
+      shell.classList.toggle("is-inview", visible);
+    };
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -28,9 +34,12 @@ const Footer = () => {
           shell.classList.remove("is-inview");
         }
       },
-      { threshold: 0.3, rootMargin: "0px 0px -12% 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px 0px 0px" },
     );
     observer.observe(shell);
+    requestAnimationFrame(() => {
+      syncInView();
+    });
     return () => {
       observer.disconnect();
       shell.classList.remove("footer-reveal-ready", "is-inview");
@@ -39,7 +48,7 @@ const Footer = () => {
 
   return (
     <footer ref={footerRef}>
-      <div ref={revealRef} className="footer-reveal content performance-reveal">
+      <div ref={revealRef} className="footer-reveal performance-reveal">
         <div className="performance-line">
           <div className="info">
             <p>

@@ -153,6 +153,22 @@ body {
       img {
         @apply container mx-auto w-2/3 max-w-full object-contain;
       }
+
+    }
+
+    &.hero-stagger .hero-reveal-item {
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+      transition:
+        opacity 1450ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1180ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--hero-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    &.hero-stagger.is-inview .hero-reveal-item {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     /* Shell reserves 16:9 space before video metadata so headline + CTA do not re-center (no “bounce”). */
@@ -166,8 +182,22 @@ body {
       @apply absolute inset-0 box-border h-full w-full object-contain;
     }
 
+    .hero-video-shell.hero-video-reveal {
+      opacity: 0;
+      transform: translateY(10px) scale(0.99);
+      transition:
+        opacity 1450ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1180ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .hero-video-shell.hero-video-reveal.is-inview {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
     button {
-      @apply relative z-10 mt-6 mb-3 shrink-0 rounded-full bg-primary px-6 py-2 text-lg font-semibold text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-black lg:mt-4 lg:mb-4;
+      @apply relative z-10 mt-6 mb-3 shrink-0 rounded-full bg-primary px-6 py-2 text-lg font-semibold text-white transition-colors duration-300 ease-in-out hover:bg-white hover:text-black lg:mt-4 lg:mb-4;
     }
 
     p {

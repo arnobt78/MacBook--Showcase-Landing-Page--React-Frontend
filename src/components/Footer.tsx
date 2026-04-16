@@ -50,9 +50,8 @@ const Footer = () => {
             </p>
             <img src="/logo.svg" alt="Apple logo" />
           </div>
-
-          <hr />
         </div>
+        <hr className="performance-line" />
 
         <div className="performance-line">
           <div className="links">

@@ -5,31 +5,42 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { footerLinks } from "../constants";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        [".info", "hr", ".links"],
-        { autoAlpha: 0, y: 24, scale: 0.985 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.72,
-          stagger: 0.16,
-          ease: "power2.inOut",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 90%",
-            end: "bottom 40%",
-            toggleActions: "restart none none reset",
-          },
-        },
-      );
+      const targets = [".info", "hr", ".links"];
+      gsap.set(targets, { autoAlpha: 0, y: 24, scale: 0.985 });
+
+      const tl = gsap.timeline({
+        paused: true,
+        defaults: { duration: 0.72, ease: "power2.inOut" },
+      });
+      tl.to(targets, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.16,
+      });
+
+      const trigger = ScrollTrigger.create({
+        trigger: footerRef.current,
+        start: "top 92%",
+        end: "bottom top",
+        animation: tl,
+        toggleActions: "play none play reverse",
+      });
+
+      return () => {
+        trigger?.kill();
+        tl.kill();
+      };
     },
     { scope: footerRef },
   );
